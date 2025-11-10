@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 void main() {
   runApp(const MyApp());
@@ -357,8 +358,8 @@ class IllustrationPainter extends CustomPainter {
     for (int i = 0; i < 20; i++) {
       canvas.drawCircle(
         Offset(
-          (i * 47) % size.width,
-          (i * 31) % (size.height * 0.5),
+          ((i * 47) % size.width.toInt()).toDouble(),
+          ((i * 31) % (size.height * 0.5).toInt()).toDouble(),
         ),
         2,
         starPaint,
@@ -428,13 +429,13 @@ class IllustrationPainter extends CustomPainter {
     // Gwiazdy różnych rozmiarów
     final starPaint = Paint()..color = Colors.white;
     for (int i = 0; i < 50; i++) {
-      final size = (i % 3 + 1).toDouble();
+      final starSize = (i % 3 + 1).toDouble();
       canvas.drawCircle(
         Offset(
-          (i * 73) % canvas.size.width,
-          (i * 47) % canvas.size.height,
+          ((i * 73) % size.width.toInt()).toDouble(),
+          ((i * 47) % size.height.toInt()).toDouble(),
         ),
-        size,
+        starSize,
         starPaint,
       );
     }
@@ -483,8 +484,8 @@ class IllustrationPainter extends CustomPainter {
     ];
 
     for (int i = 0; i < 15; i++) {
-      final x = (i * 67) % size.width;
-      final y = size.height * 0.5 + (i * 31) % (size.height * 0.4);
+      final x = ((i * 67) % size.width.toInt()).toDouble();
+      final y = size.height * 0.5 + ((i * 31) % (size.height * 0.4).toInt()).toDouble();
       final color = flowerColors[i % flowerColors.length];
 
       // Łodyga
@@ -500,11 +501,11 @@ class IllustrationPainter extends CustomPainter {
       // Płatki
       final petalPaint = Paint()..color = color;
       for (int j = 0; j < 5; j++) {
-        final angle = (j * 72) * 3.14159 / 180;
+        final angle = (j * 72) * math.pi / 180;
         canvas.drawCircle(
           Offset(
-            x + 6 * cos(angle),
-            y + 6 * sin(angle),
+            x + 6 * math.cos(angle),
+            y + 6 * math.sin(angle),
           ),
           4,
           petalPaint,
@@ -596,6 +597,3 @@ class IllustrationPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-
-double cos(double angle) => (angle - (angle * angle * angle) / 6);
-double sin(double angle) => angle - (angle * angle * angle) / 6 + (angle * angle * angle * angle * angle) / 120;
